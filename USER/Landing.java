@@ -65,37 +65,96 @@ public class Landing extends Client{
 	}
 	
 	public boolean bookBus(String vNumber, String source, String destination, int time) {
-		for(int i = 0; i < buses.length; i++) {
-			if(buses[i].vehicleNumber.equals(vNumber)) {
-				return buses[i].bookVehicle(customId, source, destination, time, 1);
+		if(loginStatus == true) {
+			for(int i = 0; i < buses.length; i++) {
+				if(buses[i].vehicleNumber.equals(vNumber)) {
+					return buses[i].bookVehicle(customId, source, destination, time, 1);
+				}
 			}
+			return false;
 		}
+		System.out.println("You must login to book a vehicle!");
 		return false;
 	}
 	
 	public boolean bookTaxi(String vNumber, String source, String destination, int time) {
-		for(int i = 0; i < taxis.length; i++) {
-			if(taxis[i].vehicleNumber.equals(vNumber)) {
-				return taxis[i].bookVehicle(customId, source, destination, time, 1);
+		if(loginStatus == true) {
+			for(int i = 0; i < taxis.length; i++) {
+				if(taxis[i].vehicleNumber.equals(vNumber)) {
+					return taxis[i].bookVehicle(customId, source, destination, time, 1);
+				}
 			}
 		}
+		System.out.println("You must login to book a taxi!");
 		return false;
 	}
 	
-	public boolean cancelBooking(String vNumber) {
-		for(int i = 0; i < buses.length; i++) {
-			if(buses[i].vehicleNumber.equals(vNumber)) {
-				return buses[i].cancelBooking(customId);
+	public boolean cancelBookings(String vNumber) {
+		if(loginStatus == true) {
+			for(int i = 0; i < buses.length; i++) {
+				if(buses[i].vehicleNumber.equals(vNumber)) {
+					return buses[i].cancelBooking(customId);
+				}
 			}
+			for(int i = 0; i < taxis.length; i++) {
+				if(taxis[i].vehicleNumber.equals(vNumber)) {
+					return taxis[i].cancelBooking(customId);
+				}
+			}	
 		}
-		for(int i = 0; i < taxis.length; i++) {
-			if(taxis[i].vehicleNumber.equals(vNumber)) {
-				return taxis[i].cancelBooking(customId);
-			}
-		}
+		System.out.println("You must login to cancel a booking!");
 		return false;
 	}
 	
+	public boolean multipleBooking(String vNumber, int num) {
+		if(loginStatus == true) {
+			Bus b;
+			int ind = -1;
+			for(int i = 0; i < buses.length; i++) {
+				if(buses[i].vehicleNumber.equals(vNumber)) {
+					ind = i;
+					break;
+				}
+			}
+			b = buses[ind];
+			String[] ids = new String[num];
+			for(int i = 0; i < num; i++) {
+				ids[i] = customId;
+			}
+			return b.addMultipleCustomers(b.getSource(), b.getDestination(), b.getTime(), ids);
+		}
+		System.out.println("You must login to book a bus!");
+		return false;
+	}
 	
+	public boolean multipleCancelations(int num, String vNumber) {
+		if(loginStatus) {
+			Bus b;
+			int ind = -1;
+			for(int i = 0; i < buses.length; i++) {
+				if(buses[i].vehicleNumber.equals(vNumber)) {
+					ind = i;
+					break;
+				}
+			}
+			if(ind != -1) {
+				b = buses[ind];
+				String[] ids = new String[num];
+				for(int i = 0; i < num; i++) {
+					ids[i] = customId;
+				}
+				return b.cancelMultipleCustomers(ids);
+			}
+			
+		}
+		System.out.println("You must login to cancel a booking!");
+		return false;
+	}
+	
+	public boolean logout() {
+		customId = null;
+		loginStatus = false;
+		return true;
+	}
 	
 }

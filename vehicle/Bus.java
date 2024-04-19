@@ -1,7 +1,5 @@
 package vehicle;
 
-import USER.Customer;
-
 public class Bus extends Vehicle{
 	int capacity;          // the Capacity of the bus or the number of total seats the bus has;
 	int availableSeats;    // the number of available seats;
@@ -48,6 +46,7 @@ public class Bus extends Vehicle{
 			numberOfCustomers--;
 			return true;
 		}
+		System.out.println("Customer doesn't have any bookings!");
 		return false;
 	}
 	
