@@ -8,8 +8,10 @@ public class Bus extends Vehicle{
 	int time;              // The time at which the bus starts its journey from its source. Measured in hours past 00:00;
 	long[] customers;	   // Maintains a list of customers by their Ids ;
 	int numberOfCustomers; // The number of customers who have currently booked the bus;
+	String companyName;    // Name of the company of the bus;
+	int distance;		   // total distance of the route;
 	
-	Bus(int cap, String source, String dest, int time, String vnumber){
+	Bus(int cap, String source, String dest, int time, String vnumber, String name, int distance){
 		this.vehicleNumber = vnumber;
 		capacity = cap;
 		availableSeats = cap;
@@ -18,10 +20,12 @@ public class Bus extends Vehicle{
 		this.time = time;
 		customers = new long[cap];
 		numberOfCustomers = 0;
+		companyName = name;
+		this.distance = distance;
 	}
 	
 	@Override
-	public boolean bookVehicle(long customId) {
+	public boolean bookVehicle(long customId, String source, String destination, int time, int cap) {
 		if(availableSeats > 0) {
 			customers[numberOfCustomers] =  customId;
 			numberOfCustomers++;
