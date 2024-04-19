@@ -81,4 +81,22 @@ public class Bus extends Vehicle{
 	public int getTime() {
 		return time;
 	}
+	
+	public boolean addMultipleCustomers(String source, String dest, int time, long... customs) {
+		for(int i = 0; i < customs.length; i++) {
+			if(!bookVehicle(customs[i], source, dest, time, 1)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean cancelMultipleCustomers(long... customs) {
+		for(int i = 0; i < customs.length; i++) {
+			if(!cancelBooking(customs[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
