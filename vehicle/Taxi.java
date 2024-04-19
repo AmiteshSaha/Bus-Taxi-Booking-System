@@ -9,7 +9,7 @@ public class Taxi extends Vehicle{
 	String driverName;
 	long driverContact;
 	int[] bookingTimes;
-	long[] customers;
+	String[] customers;
 	int[] numOfCustomers;
 	int maxTime;
 	int[] ETAs;
@@ -76,7 +76,7 @@ public class Taxi extends Vehicle{
 	}
 	
 	@Override
-	public boolean bookVehicle(long customId, String source, String destination, int time, int cap) {
+	public boolean bookVehicle(String customId, String source, String destination, int time, int cap) {
 		Route route = setRoute(source, destination, time);
 		if(route.ETA - route.startTime > maxTime) {
 			return false;
@@ -96,7 +96,7 @@ public class Taxi extends Vehicle{
 	}
 	
 	@Override
-	public boolean cancelBooking(long customId) {
+	public boolean cancelBooking(String customId) {
 		int ind = getCustomerId(customers, customId);
 		if(ind != -1) {
 			for(int i = ind; i < numberOfBookings; i++) {
@@ -108,14 +108,14 @@ public class Taxi extends Vehicle{
 			bookingTimes[numberOfBookings-1] = 0;
 			ETAs[numberOfBookings-1] = 0;
 			numOfCustomers[numberOfBookings-1] = 0;
-			customers[numberOfBookings-1] = 0;
+			customers[numberOfBookings-1] = null;
 			numberOfBookings--;
 			return true;
 		}
 		return false;
 	}
 	
-	private int getCustomerId(long[] customs, long customId) {
+	private int getCustomerId(String[] customs, String customId) {
 		for(int i = 0; i < customs.length; i++) {
 			if(customs[i] == customId) {
 				return i;
@@ -123,4 +123,6 @@ public class Taxi extends Vehicle{
 		}
 		return -1;
 	}
+	
+	
 }
