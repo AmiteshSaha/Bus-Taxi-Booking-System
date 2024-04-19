@@ -5,9 +5,9 @@ public class Login implements user_base{
 	public String checkLogin(String email,String password) {
 		int f=-1;;
 		for(int i=0;i<Customer.custs.size();i++) {
-			if(Customer.custs.get(i).email==email&&Customer.custs.get(i).password==password)
+			if(Customer.custs.get(i).email.equals(email)&&Customer.custs.get(i).password.equals(password))
 				f=0;
-			else if(Customer.custs.get(i).email==email&&Customer.custs.get(i).password!=password) {
+			else if(Customer.custs.get(i).email.equals(email)&&!(Customer.custs.get(i).password.equals(password))) {
 				f=1;
 			}
 		}
@@ -20,22 +20,26 @@ public class Login implements user_base{
 			
 	}
 	@Override
-	public String newLogin(String name, String password, String email, long mob_no) {
+	public String newLogin(String name, String password, String email, long mob_no,char gen) {
 		for(int i=0;i<Customer.custs.size();i++) {
 			if(Customer.custs.get(i).email==email)
 				return "User already exists";
 		}
-		Customer cust=new Customer(name, password, email, mob_no);
-		cust.addCustomer();
+		if(gen=='M'||gen=='F')
+		{Customer cust=new Customer(name, password, email, mob_no, gen);cust.addCustomer();}
+		else
+		{Customer cust=new Customer(name, password, email, mob_no);cust.addCustomer();}
+		
+		
 		return "Sign Up Successful!";
 	}
 
 	@Override
 	public String deleteLogin(String email,String password) {
 		for(int i=0;i<Customer.custs.size();i++) {
-			if(Customer.custs.get(i).email==email&&Customer.custs.get(i).password==password)
+			if(Customer.custs.get(i).email.equals(email)&&Customer.custs.get(i).password.equals(password))
 			{Customer.custs.remove(i);
-				return "User deleted Successful";
+				return "User deleted Successfully";
 			}
 		}
 		return "invalid user id or password";
