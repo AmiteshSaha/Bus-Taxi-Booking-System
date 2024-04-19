@@ -18,6 +18,17 @@ public class Landing extends Client{
 		loginStatus = false;
 	}
 	
+	public String deleteLogin(String email,String password) {
+		for(int i=0;i<Customer.custs.size();i++) {
+			if(Customer.custs.get(i).email.equals(email)&&Customer.custs.get(i).password.equals(password))
+			{
+				Customer.custs.remove(i);
+				return "User deleted Successfully";
+			}
+		}
+		return "invalid user id or password";
+	}
+	
 	public void loginClient() {
 		Client client = new Client();
 		String a;
@@ -156,5 +167,7 @@ public class Landing extends Client{
 		loginStatus = false;
 		return true;
 	}
+	
+	
 	
 }

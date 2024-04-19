@@ -47,8 +47,7 @@ public class Login implements user_base{
 			Customer cust=new Customer(name, password, email, mob_no);cust.addCustomer();
 			id = cust.cust_id;
 		}
-		
-		
+
 		System.out.println("Sign Up Successful!");
 		return id;
 	}
@@ -57,7 +56,8 @@ public class Login implements user_base{
 	public String deleteLogin(String email,String password) {
 		for(int i=0;i<Customer.custs.size();i++) {
 			if(Customer.custs.get(i).email.equals(email)&&Customer.custs.get(i).password.equals(password))
-			{Customer.custs.remove(i);
+			{
+				Customer.custs.remove(i);
 				return "User deleted Successfully";
 			}
 		}
